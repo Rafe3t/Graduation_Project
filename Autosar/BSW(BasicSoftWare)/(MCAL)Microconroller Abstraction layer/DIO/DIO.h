@@ -32,20 +32,30 @@ typedef struct
  *******************************************************************************/
 
 /* Function for DIO read Channel */
-Dio_PortLevelType Dio_ReadPort(Dio_PortType PortId);
+Dio_PortLevelType Dio_ReadPort
+(Dio_PortType PortId);
 /* Function for DIO read Channel group  */
-Dio_PortLevelType Dio_ReadChannelGroup( const Dio_ChannelGroupType* ChannelGroupIdPtr );
+Dio_PortLevelType Dio_ReadChannelGroup
+( const Dio_ChannelGroupType* ChannelGroupIdPtr );
 
 /* Function for DIO write Channel  */
-void Dio_WritePort(Dio_PortType PortId, Dio_PortLevelType Level);
+void Dio_WritePort
+(Dio_PortType PortId,
+ Dio_PortLevelType Level);
 
 /* Function for DIO read Port  */
-Dio_LevelType Dio_ReadChannel(Dio_ChannelType ChannelId);
+Dio_LevelType Dio_ReadChannel
+(Dio_ChannelType ChannelId);
 
 /* Function for DIO write pin  */
-void Dio_WriteChannel(Dio_ChannelType ChannelId, Dio_LevelType Level);
+void Dio_WriteChannel
+(Dio_ChannelType ChannelId, 
+Dio_LevelType Level);
 /* Function for DIO write group of pin  */
-void Dio_WriteChannelGroup( const Dio_ChannelGroupType* ChannelGroupIdPtr,  Dio_PortLevelType Level ) ;
+void Dio_WriteChannelGroup
+ ( const Dio_ChannelGroupType* ChannelGroupIdPtr,
+ Dio_PortLevelType Level ) ;
 
 /* Function for DIO Initialization */
-void Dio_Init(const Dio_ConfigType * ConfigPtr);
+void Dio_Init
+(const Dio_ConfigType * ConfigPtr);
