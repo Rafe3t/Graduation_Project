@@ -1,3 +1,4 @@
+@@ -0,0 +1,158 @@
 /*=========================================================================================*/
 /*  File          : DIO.h                                                                  */
 /*  Description   : This file includes DIO Driver By Autosar standaard for stm32f407vgt6   */
@@ -31,7 +32,7 @@ typedef enum
                            /***************************/
 typedef enum
 {
-	PIN_1,PIN_2,PIN_3,PIN_4,PIN_5,PIN_6,PIN_7,PIN_8,PIN_9,PIN_10,PIN_11,PIN_12
+	PIN_0,PIN_1,PIN_2,PIN_3,PIN_4,PIN_5,PIN_6,PIN_7,PIN_8,PIN_9,PIN_10,PIN_11,PIN_12,PIN_13,PIN_14,PIN_15
 }Dio_ChannelType;					   
                          /*****************************/
 typedef enum
