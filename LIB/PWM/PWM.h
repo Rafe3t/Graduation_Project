@@ -11,6 +11,66 @@
 #include"TIMER_REG.h"
 #ifndef PWM_H
 #define PWM_H
+/**********************************definations***********************************************/
+/********************************MOHAMED MAGED********************************************/
+/*******************************SINGEL****************************************************/
+/*****************************01156070710*************************************************/
+/****************************LOOKING FOR DIVORCED WOMAN***********************************/
+#define TIM_CHANNEL_1                      0x00000000U                          /*!< Capture/compare channel 1 identifier      */
+#define TIM_CHANNEL_2                      0x00000004U                          /*!< Capture/compare channel 2 identifier      */
+#define TIM_CHANNEL_3                      0x00000008U                          /*!< Capture/compare channel 3 identifier      */
+#define TIM_CHANNEL_4                      0x0000000CU                          /*!< Capture/compare channel 4 identifier      */
+#define TIM_CHANNEL_ALL                    0x0000003CU                          /*!< Global Capture/compare channel identifier  */
+
+
+
+
+#define TIM_DMABASE_CR1                    0x00000000U
+#define TIM_DMABASE_CR2                    0x00000001U
+#define TIM_DMABASE_SMCR                   0x00000002U
+#define TIM_DMABASE_DIER                   0x00000003U
+#define TIM_DMABASE_SR                     0x00000004U
+#define TIM_DMABASE_EGR                    0x00000005U
+#define TIM_DMABASE_CCMR1                  0x00000006U
+#define TIM_DMABASE_CCMR2                  0x00000007U
+#define TIM_DMABASE_CCER                   0x00000008U
+#define TIM_DMABASE_CNT                    0x00000009U
+#define TIM_DMABASE_PSC                    0x0000000AU
+#define TIM_DMABASE_ARR                    0x0000000BU
+#define TIM_DMABASE_RCR                    0x0000000CU
+#define TIM_DMABASE_CCR1                   0x0000000DU
+#define TIM_DMABASE_CCR2                   0x0000000EU
+#define TIM_DMABASE_CCR3                   0x0000000FU
+#define TIM_DMABASE_CCR4                   0x00000010U
+#define TIM_DMABASE_BDTR                   0x00000011U
+#define TIM_DMABASE_DCR                    0x00000012U
+#define TIM_DMABASE_DMAR                   0x00000013U
+
+
+#define TIM_IT_UPDATE                      TIM_DIER_UIE                         /*!< Update interrupt            */
+#define TIM_IT_CC1                         TIM_DIER_CC1IE                       /*!< Capture/Compare 1 interrupt */
+#define TIM_IT_CC2                         TIM_DIER_CC2IE                       /*!< Capture/Compare 2 interrupt */
+#define TIM_IT_CC3                         TIM_DIER_CC3IE                       /*!< Capture/Compare 3 interrupt */
+#define TIM_IT_CC4                         TIM_DIER_CC4IE                       /*!< Capture/Compare 4 interrupt */
+#define TIM_IT_COM                         TIM_DIER_COMIE                       /*!< Commutation interrupt       */
+#define TIM_IT_TRIGGER                     TIM_DIER_TIE                         /*!< Trigger interrupt           */
+#define TIM_IT_BREAK                       TIM_DIER_BIE                         /*!< Break interrupt             */
+
+#define TIM_CCx_ENABLE                   0x00000001U                            /*!< Input or output channel is enabled */
+#define TIM_CCx_DISABLE                  0x00000000U                            /*!< Input or output channel is disabled */
+#define TIM_CCxN_ENABLE                  0x00000004U                            /*!< Complementary output channel is enabled */
+#define TIM_CCxN_DISABLE                 0x00000000U                            /*!< Complementary output channel is enabled */
+
+
+
+#define TIM_DMA_UPDATE                     TIM_DIER_UDE                         /*!< DMA request is triggered by the update event */
+#define TIM_DMA_CC1                        TIM_DIER_CC1DE                       /*!< DMA request is triggered by the capture/compare macth 1 event */
+#define TIM_DMA_CC2                        TIM_DIER_CC2DE                       /*!< DMA request is triggered by the capture/compare macth 2 event event */
+#define TIM_DMA_CC3                        TIM_DIER_CC3DE                       /*!< DMA request is triggered by the capture/compare macth 3 event event */
+#define TIM_DMA_CC4                        TIM_DIER_CC4DE                       /*!< DMA request is triggered by the capture/compare macth 4 event event */
+#define TIM_DMA_COM                        TIM_DIER_COMDE                       /*!< DMA request is triggered by the commutation event */
+#define TIM_DMA_TRIGGER                    TIM_DIER_TDE                         /*!< DMA request is triggered by the trigger event */
+/***********************************************************************************************/
 /************************** DMA ***************************************************************/
 typedef struct
 {
@@ -262,9 +322,9 @@ HAL_StatusTypeDef HAL_TIM_PWM_Stop(TIM_HandleTypeDef *htim, uint32_t Channel);
 /* Non-Blocking mode: Interrupt */
 HAL_StatusTypeDef HAL_TIM_PWM_Start_IT(TIM_HandleTypeDef *htim, uint32_t Channel);
 HAL_StatusTypeDef HAL_TIM_PWM_Stop_IT(TIM_HandleTypeDef *htim, uint32_t Channel);
-/* Non-Blocking mode: DMA */
-HAL_StatusTypeDef HAL_TIM_PWM_Start_DMA(TIM_HandleTypeDef *htim, uint32_t Channel, uint32_t *pData, uint16_t Length);
-HAL_StatusTypeDef HAL_TIM_PWM_Stop_DMA(TIM_HandleTypeDef *htim, uint32_t Channel);
+/* Non-Blocking mode: DMA *//*commented*/
+/*HAL_StatusTypeDef HAL_TIM_PWM_Start_DMA(TIM_HandleTypeDef *htim, uint32_t Channel, uint32_t *pData, uint16_t Length);*/
+/*HAL_StatusTypeDef HAL_TIM_PWM_Stop_DMA(TIM_HandleTypeDef *htim, uint32_t Channel);*/
 
 
 
