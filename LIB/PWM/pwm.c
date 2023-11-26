@@ -545,3 +545,264 @@ HAL_StatusTypeDef status = HAL_OK;
   /* Return function status 
   return status;
 }*/
+/**
+  * @brief  Initializes the TIM Time base Unit according to the specified
+  *         parameters in the TIM_HandleTypeDef and initialize the associated handle.
+  * @note   Switching from Center Aligned counter mode to Edge counter mode (or reverse)
+  *         requires a timer reset to avoid unexpected direction
+  *         due to DIR bit readonly in center aligned mode.
+  *         Ex: call @ref HAL_TIM_Base_DeInit() before HAL_TIM_Base_Init()
+  * @param  htim TIM Base handle
+  * @retval HAL status
+  */
+HAL_StatusTypeDef HAL_TIM_Base_Init(TIM_HandleTypeDef *htim)
+{
+  /* Check the TIM handle allocation */
+  if (htim == NULL_PTR)
+  {
+    return HAL_ERROR;
+  }
+
+  /* Check the parameters */
+  assert_param(IS_TIM_INSTANCE(htim->Instance));
+  assert_param(IS_TIM_COUNTER_MODE(htim->Init.CounterMode));
+  assert_param(IS_TIM_CLOCKDIVISION_DIV(htim->Init.ClockDivision));
+  assert_param(IS_TIM_AUTORELOAD_PRELOAD(htim->Init.AutoReloadPreload));
+
+  if (htim->State == HAL_TIM_STATE_RESET)
+  {
+    /* Allocate lock resource and initialize it */
+    htim->Lock = HAL_UNLOCKED;
+
+#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
+    /* Reset interrupt callbacks to legacy weak callbacks */
+    TIM_ResetCallback(htim);
+
+    if (htim->Base_MspInitCallback == NULL)
+    {
+      htim->Base_MspInitCallback = HAL_TIM_Base_MspInit;
+    }
+    /* Init the low level hardware : GPIO, CLOCK, NVIC */
+    htim->Base_MspInitCallback(htim);
+#else
+    /* Init the low level hardware : GPIO, CLOCK, NVIC */
+    HAL_TIM_Base_MspInit(htim);
+#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
+  }
+
+  /* Set the TIM state */
+  htim->State = HAL_TIM_STATE_BUSY;
+
+  /* Set the Time Base configuration */
+  TIM_Base_SetConfig(htim->Instance, &htim->Init);
+
+  /* Initialize the DMA burst operation state */
+  htim->DMABurstState = HAL_DMA_BURST_STATE_READY;
+
+  /* Initialize the TIM channels state */
+  TIM_CHANNEL_STATE_SET_ALL(htim, HAL_TIM_CHANNEL_STATE_READY);
+  TIM_CHANNEL_N_STATE_SET_ALL(htim, HAL_TIM_CHANNEL_STATE_READY);
+
+  /* Initialize the TIM state*/
+  htim->State = HAL_TIM_STATE_READY;
+
+  return HAL_OK;
+}
+
+/**
+  * @brief  DeInitializes the TIM Base peripheral
+  * @param  htim TIM Base handle
+  * @retval HAL status
+  */
+HAL_StatusTypeDef HAL_TIM_Base_DeInit(TIM_HandleTypeDef *htim)
+{
+  /* Check the parameters */
+  assert_param(IS_TIM_INSTANCE(htim->Instance));
+
+  htim->State = HAL_TIM_STATE_BUSY;
+
+  /* Disable the TIM Peripheral Clock */
+  __HAL_TIM_DISABLE(htim);
+
+#if (USE_HAL_TIM_REGISTER_CALLBACKS == 1)
+  if (htim->Base_MspDeInitCallback == NULL)
+  {
+    htim->Base_MspDeInitCallback = HAL_TIM_Base_MspDeInit;
+  }
+  /* DeInit the low level hardware */
+  htim->Base_MspDeInitCallback(htim);
+#else
+  /* DeInit the low level hardware: GPIO, CLOCK, NVIC */
+  HAL_TIM_Base_MspDeInit(htim);
+#endif /* USE_HAL_TIM_REGISTER_CALLBACKS */
+
+  /* Change the DMA burst operation state */
+  htim->DMABurstState = HAL_DMA_BURST_STATE_RESET;
+
+  /* Change the TIM channels state */
+  TIM_CHANNEL_STATE_SET_ALL(htim, HAL_TIM_CHANNEL_STATE_RESET);
+  TIM_CHANNEL_N_STATE_SET_ALL(htim, HAL_TIM_CHANNEL_STATE_RESET);
+
+  /* Change TIM state */
+  htim->State = HAL_TIM_STATE_RESET;
+
+  /* Release Lock */
+  __HAL_UNLOCK(htim);
+
+  return HAL_OK;
+}
+
+/**
+  * @brief  Initializes the TIM Base MSP.
+  * @param  htim TIM Base handle
+  * @retval None
+  */
+ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim)
+{
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(htim);
+
+  /* NOTE : This function should not be modified, when the callback is needed,
+            the HAL_TIM_Base_MspInit could be implemented in the user file
+   */
+}
+
+/**
+  * @brief  DeInitializes TIM Base MSP.
+  * @param  htim TIM Base handle
+  * @retval None
+  */
+ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef *htim)
+{
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(htim);
+
+  /* NOTE : This function should not be modified, when the callback is needed,
+            the HAL_TIM_Base_MspDeInit could be implemented in the user file
+   */
+}
+
+
+/**
+  * @brief  Starts the TIM Base generation.
+  * @param  htim TIM Base handle
+  * @retval HAL status
+  */
+HAL_StatusTypeDef HAL_TIM_Base_Start(TIM_HandleTypeDef *htim)
+{
+  uint32_t tmpsmcr;
+
+  /* Check the parameters */
+  assert_param(IS_TIM_INSTANCE(htim->Instance));
+
+  /* Check the TIM state */
+  if (htim->State != HAL_TIM_STATE_READY)
+  {
+    return HAL_ERROR;
+  }
+
+  /* Set the TIM state */
+  htim->State = HAL_TIM_STATE_BUSY;
+
+  /* Enable the Peripheral, except in trigger mode where enable is automatically done with trigger */
+  if (IS_TIM_SLAVE_INSTANCE(htim->Instance))
+  {
+    tmpsmcr = htim->Instance->SMCR & TIM_SMCR_SMS;
+    if (!IS_TIM_SLAVEMODE_TRIGGER_ENABLED(tmpsmcr))
+    {
+      __HAL_TIM_ENABLE(htim);
+    }
+  }
+  else
+  {
+    __HAL_TIM_ENABLE(htim);
+  }
+
+  /* Return function status */
+  return HAL_OK;
+}
+
+/**
+  * @brief  Stops the TIM Base generation.
+  * @param  htim TIM Base handle
+  * @retval HAL status
+  */
+HAL_StatusTypeDef HAL_TIM_Base_Stop(TIM_HandleTypeDef *htim)
+{
+  /* Check the parameters */
+  assert_param(IS_TIM_INSTANCE(htim->Instance));
+
+  /* Disable the Peripheral */
+  __HAL_TIM_DISABLE(htim);
+
+  /* Set the TIM state */
+  htim->State = HAL_TIM_STATE_READY;
+
+  /* Return function status */
+  return HAL_OK;
+}
+
+/**
+  * @brief  Starts the TIM Base generation in interrupt mode.
+  * @param  htim TIM Base handle
+  * @retval HAL status
+  */
+HAL_StatusTypeDef HAL_TIM_Base_Start_IT(TIM_HandleTypeDef *htim)
+{
+  uint32_t tmpsmcr;
+
+  /* Check the parameters */
+  assert_param(IS_TIM_INSTANCE(htim->Instance));
+
+  /* Check the TIM state */
+  if (htim->State != HAL_TIM_STATE_READY)
+  {
+    return HAL_ERROR;
+  }
+
+  /* Set the TIM state */
+  htim->State = HAL_TIM_STATE_BUSY;
+
+  /* Enable the TIM Update interrupt */
+  __HAL_TIM_ENABLE_IT(htim, TIM_IT_UPDATE);
+
+  /* Enable the Peripheral, except in trigger mode where enable is automatically done with trigger */
+  if (IS_TIM_SLAVE_INSTANCE(htim->Instance))
+  {
+    tmpsmcr = htim->Instance->SMCR & TIM_SMCR_SMS;
+    if(!IS_TIM_SLAVEMODE_TRIGGER_ENABLED(tmpsmcr))
+    {
+      __HAL_TIM_ENABLE(htim);
+    }
+  }
+  else
+  {
+    __HAL_TIM_ENABLE(htim);
+  }
+
+  /* Return function status */
+  return HAL_OK;
+}
+
+/**
+  * @brief  Stops the TIM Base generation in interrupt mode.
+  * @param  htim TIM Base handle
+  * @retval HAL status
+  */
+HAL_StatusTypeDef HAL_TIM_Base_Stop_IT(TIM_HandleTypeDef *htim)
+{
+  /* Check the parameters */
+  assert_param(IS_TIM_INSTANCE(htim->Instance));
+
+  /* Disable the TIM Update interrupt */
+  __HAL_TIM_DISABLE_IT(htim, TIM_IT_UPDATE);
+
+  /* Disable the Peripheral */
+  __HAL_TIM_DISABLE(htim);
+
+  /* Set the TIM state */
+  htim->State = HAL_TIM_STATE_READY;
+
+  /* Return function status */
+  return HAL_OK;
+}
