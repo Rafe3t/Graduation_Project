@@ -10,7 +10,7 @@
 #ifndef STD_TYPES_H_
 #define STD_TYPES_H_
 /********************************************************************/
-#define RESET               (0U)
+#define RESET               (0U)    /*CHECK ERROR*/
 /*******************************************************************/
 /* CPU register type width */
 
