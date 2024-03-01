@@ -1,0 +1,23 @@
+this two control the right side motors
+{
+pwm channel 1 pinA1
+pwm channel 2 pinA2
+}
+
+this two control the left side motors
+{
+pwm channel 3 pinA3
+pwm channel 4 pinA6
+}
+
+
+DcMotor_Move_MainDirection(forward, 50);
+	_delay_ms(1000);
+	DcMotor_Move_MainDirection(backword, 50);
+	_delay_ms(1000);
+	DcMotor_Move_MainDirection(right, 50);
+	_delay_ms(1000);
+	DcMotor_Move_MainDirection(left, 50);
+	_delay_ms(1000);
+	DcMotor_Move_MainDirection(stop, 0);
+

@@ -325,13 +325,12 @@ HAL_StatusTypeDef HAL_TIM_PWM_Stop_IT(TIM_HandleTypeDef *htim, uint32_t Channel)
 /* Non-Blocking mode: DMA *//*commented*/
 /*HAL_StatusTypeDef HAL_TIM_PWM_Start_DMA(TIM_HandleTypeDef *htim, uint32_t Channel, uint32_t *pData, uint16_t Length);*/
 /*HAL_StatusTypeDef HAL_TIM_PWM_Stop_DMA(TIM_HandleTypeDef *htim, uint32_t Channel);*/
-
-
-
-
-
-
-
-
-
 #endif
+
+
+
+
+
+
+
+

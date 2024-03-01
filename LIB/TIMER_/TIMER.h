@@ -34,7 +34,7 @@ typedef struct
 /* Exported constants --------------------------------------------------------*/
 /** @defgroup TIMEx_Exported_Constants TIM Extended Exported Constants
   * @{
-  */
+  */ 
 
 /** @defgroup TIMEx_Remap TIM Extended Remapping
   * @{
