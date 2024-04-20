@@ -1,0 +1,8 @@
+../Core/Src/tim2_pwm.c:8:6:TIM2_PWM_Init	1
+../Core/Src/tim2_pwm.c:20:6:TIM2_PWM_Channel_1_dutyCycle	2
+../Core/Src/tim2_pwm.c:35:6:TIM2_PWM_Channel_2_dutyCycle	2
+../Core/Src/tim2_pwm.c:51:6:TIM2_PWM_Channel_3_dutyCycle	2
+../Core/Src/tim2_pwm.c:66:6:TIM2_PWM_Channel_4_dutyCycle	2
+../Core/Src/tim2_pwm.c:83:13:MX_TIM2_Init	8
+../Core/Src/tim2_pwm.c:148:13:MX_TIM3_Init	6
+../Core/Src/tim2_pwm.c:203:13:MX_GPIO_Init	1

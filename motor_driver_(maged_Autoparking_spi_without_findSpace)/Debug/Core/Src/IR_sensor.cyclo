@@ -1,0 +1,3 @@
+../Core/Src/IR_sensor.c:12:6:IR_sensor_Init	1
+../Core/Src/IR_sensor.c:23:10:IR_sensor_GetLeftSensorValue	1
+../Core/Src/IR_sensor.c:29:10:IR_sensor_GetRightSensorValue	1

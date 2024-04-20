@@ -1,0 +1,7 @@
+../Core/Src/DC_motor.c:16:6:DcMotor_Init	1
+../Core/Src/DC_motor.c:21:6:DcMotor_Move_MainDirection	6
+../Core/Src/DC_motor.c:46:13:DcMotor_stop	1
+../Core/Src/DC_motor.c:53:13:DcMotor_Forward	1
+../Core/Src/DC_motor.c:61:13:DcMotor_Backward	1
+../Core/Src/DC_motor.c:69:13:DcMotor_right	1
+../Core/Src/DC_motor.c:77:13:DcMotor_left	1
