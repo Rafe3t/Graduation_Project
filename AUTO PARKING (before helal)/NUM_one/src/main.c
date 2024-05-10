@@ -21,12 +21,12 @@ char Parking_Flag=0;     /*this flag set when this place fits our car*/
 char check_time=0;       /*we will change car position for three times
                           then we made sure that this palce doesnot fit our car  */
 /* Private variables */
-#define pi                3.14159
+/#define pi                3.14159
 //#define lidar_velocity    3.14159  /* the velocity of our lidar pi per sec (ask ref3at) */
-#define lidar_time_cycle  2000       /* the time cycle of our lidar (ask ref3at)          */
+#define lidar_time_cycle  1500       /* the time cycle of our lidar (ask ref3at)          */
 #define X_AXIS_car        11         /*we should put the width of our car (ask yasser)    */
 #define Y_AXIS_car        22         /*we should put the length of our car  (ask yasser)  */
-#define MAX_Distance_BY_Lidar       120
+#define MAX_Distance_BY_Lidar       120       /*in CM */
 /*we should put the MAX_Distance_BY_Lidar of our car  (ask Ref3at)  */
 #define tim_every_18_degree           100
 #define tim_every_45_degree           250
